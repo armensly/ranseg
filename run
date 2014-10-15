@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -e
+record=data.tsv
+> $record
+a0=7
+b0=19
+p0=27644437
+x0=111
+
+# question a
+input_size_array=(1000000)
+process_count_array=(2 4 8 16)
+# question b
+# input_size_array=(100 1000 10000 100000 1000000)
+# process_count_array=(16)
+
+printf "processor_count input_size runtime" >> $record
+for process_count in ${process_count_array[@]}
+do
+    for input_size in ${input_size_array[@]}
+    do
+	# if [ "input_size" -lt "$process_count" ]
+	# then
+	#     continue
+	# fi
+	printf "running process_count: %d input_size: %d\n" $process_count $input_size
+	mpiexec -machinefile $HOME/machinefile.txt -n $process_count ./ranseg.app $input_size $a0 $b0 $p0 $x0 >> $record 2>error.log
+    done
+done
+cat record
