@@ -24,7 +24,7 @@ do
 	#     continue
 	# fi
 	printf "running process_count: %d input_size: %d\n" $process_count $input_size
-	mpiexec -machinefile $HOME/machinefile.txt -n $process_count ./ranseg.app $input_size $a0 $b0 $p0 $x0 >> $record 2>error.log
+	mpiexec -n $process_count ./ranseg.app $input_size $a0 $b0 $p0 $x0 >> $record 2>error.log
     done
 done
 cat record
